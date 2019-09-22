@@ -5,16 +5,17 @@ using System.Web;
 using System.Web.Mvc;
 using MyShop.Core.Models;
 using MyShop.DataAccess.InMemory;
+using MyShop.Core.Contracts;
 
 namespace MyShop.WebUI.Controllers
 {
     public class ProductCategoryManagementController : Controller
     {
-        private readonly InMemoryRepository<ProductCategory> productCategoryRepository;
+        private readonly IRepository<ProductCategory> productCategoryRepository;
 
-        public ProductCategoryManagementController()
+        public ProductCategoryManagementController(IRepository<ProductCategory> productCategoryRepository)
         {
-            productCategoryRepository = new InMemoryRepository<ProductCategory>();
+            this.productCategoryRepository = productCategoryRepository;
         }
 
         // Get - All Categories
