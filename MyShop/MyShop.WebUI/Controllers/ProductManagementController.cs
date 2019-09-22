@@ -1,4 +1,5 @@
 ﻿using MyShop.Core.Models;
+using MyShop.Core.ViewModels;
 using MyShop.DataAccess.InMemory;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,13 @@ namespace MyShop.WebUI.Controllers
     {
         private readonly ProductRepository context;
 
+        private readonly ProductCategoryRepository productCategoryRepository;
+
         public ProductManagementController()
         {
-            context = new ProductRepository(); 
+            context = new ProductRepository();
+
+            productCategoryRepository = new ProductCategoryRepository();
         }
         
         public ActionResult Index()
@@ -27,7 +32,12 @@ namespace MyShop.WebUI.Controllers
         // Get : Create View
         public ActionResult Create()
         {
-            return View();
+            ProductManagerViewModel viewModel = new ProductManagerViewModel();
+
+            viewModel.ProductCategories = productCategoryRepository.Collection();
+            viewModel.Product = new Product();
+
+            return View(viewModel);
         }
 
 
@@ -55,14 +65,18 @@ namespace MyShop.WebUI.Controllers
         {
             var product = context.Find(Id);
 
-            if(product == null)
+            if (product == null)
             {
                 return HttpNotFound();
             }
 
             else
             {
-                return View(product);
+                ProductManagerViewModel viewModel = new ProductManagerViewModel();
+                viewModel.Product = product;
+                viewModel.ProductCategories = productCategoryRepository.Collection();
+
+                return View(viewModel);
             }
         }
 
