@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace MyShop.Core.Models
 {
-    public class ProductCategory : BaseEntity
+    public abstract class BaseEntity
     {
+        public string Id { get; set; }
 
-        public string Name { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public ProductCategory()
+        public BaseEntity()
         {
             Id = Guid.NewGuid().ToString();
+            CreatedAt = DateTime.Now;
         }
     }
 }

@@ -11,15 +11,20 @@ namespace MyShop.WebUI.Controllers
 {
     public class ProductManagementController : Controller
     {
-        private readonly ProductRepository context;
+    //    private readonly ProductRepository context;
 
-        private readonly ProductCategoryRepository productCategoryRepository;
+    //    private readonly ProductCategoryRepository productCategoryRepository;
+
+        private readonly InMemoryRepository<Product> context;
+
+        private readonly InMemoryRepository<ProductCategory> productCategoryRepository;
+
 
         public ProductManagementController()
         {
-            context = new ProductRepository();
+            context = new InMemoryRepository<Product>();
 
-            productCategoryRepository = new ProductCategoryRepository();
+            productCategoryRepository = new InMemoryRepository<ProductCategory>();
         }
         
         public ActionResult Index()
@@ -142,7 +147,7 @@ namespace MyShop.WebUI.Controllers
 
             else
             {
-                context.Delete(Id);
+                context.Delete(productToDelete);
                 context.Commit();
                 return RedirectToAction("Index");
             }
