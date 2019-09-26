@@ -22,7 +22,7 @@ namespace MyShop.Services
             _basketRepository = basketRepository;
         }
 
-        private const string BasketSessionName = "eCommerceBasket";
+        private const string BasketSessionName = "myShopBasket";
 
         private Basket GetBasket(HttpContextBase httpContextBase , bool CreateIfNull)
         {
@@ -70,6 +70,10 @@ namespace MyShop.Services
 
             httpContextBase.Response.Cookies.Add(cookie);
 
+            _basketRepository.Insert(basket);
+
+            _basketRepository.Commit();
+
             return basket;
         }
 
@@ -94,7 +98,9 @@ namespace MyShop.Services
                 };
 
                 basket.BasketItems.Add(item);
+
             }
+
 
             _basketRepository.Commit();
         }
@@ -127,7 +133,8 @@ namespace MyShop.Services
                                   Quantity = b.Quantity,
                                   ProductName = p.Name,
                                   ProductDescription = p.Description,
-                                  ProductPrice = p.Price
+                                  ProductPrice = p.Price,
+                                  ProductImage = p.Image
                               }).ToList();
 
                 return results;
@@ -149,7 +156,7 @@ namespace MyShop.Services
                 decimal? BasketTotal = (from b in basket.BasketItems
                                         join p in _productRepository.Collection()
                                         on b.ProductId equals p.Id
-                                        select b.Quantity).Sum();
+                                        select b.Quantity * p.Price).Sum();
 
                 basketSummaryViewModel.BasketCount = BasketCount ?? 0;
 

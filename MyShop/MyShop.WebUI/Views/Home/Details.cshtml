@@ -47,6 +47,9 @@
             @Html.DisplayFor(model => model.Category)
         </dd>
 
+        <dd>
+            <a href="@Url.Action("AddToBasket" , "Basket" , new { productId = Model.Id})" class="btn btn-default">Add to Basket</a>
+        </dd>
 
     </dl>
 </div>
