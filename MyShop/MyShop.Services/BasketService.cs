@@ -165,5 +165,16 @@ namespace MyShop.Services
 
             return basketSummaryViewModel;
         }
+
+        public void ClearBasket(HttpContextBase httpContextBase)
+        {
+            var basket = GetBasket(httpContextBase, false);
+
+            if (basket != null)
+            {
+                basket.BasketItems.Clear();
+                _basketRepository.Commit();
+            }
+        }
     }
 }

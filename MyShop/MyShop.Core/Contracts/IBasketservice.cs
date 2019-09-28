@@ -18,5 +18,7 @@ namespace MyShop.Core.Contracts
 
         BasketSummaryViewModel GetBasketSummay(HttpContextBase httpContextBase);
 
+        void ClearBasket(HttpContextBase httpContextBas);
+
     }
 }
