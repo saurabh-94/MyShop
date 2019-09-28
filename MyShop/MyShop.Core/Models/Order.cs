@@ -27,6 +27,8 @@ namespace MyShop.Core.Models
 
         public string OrderStatus { get; set; }
 
+        public string Email { get; set; }
+
         public virtual ICollection<OrderItem> OrderItems { get; set; }
     }
 }
